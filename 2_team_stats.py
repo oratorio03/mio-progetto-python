@@ -295,8 +295,8 @@ def process_nation(nation_code, cutoff=None):
     out_df = pd.DataFrame(all_profiles)
     # Se cutoff attivo salva in file separato per non sovrascrivere la produzione
     save_path = out_path.parent / f"team_stats_cutoff_{cutoff}.csv" if cutoff else out_path
-        
-    out_df.to_csv(out_path, index=False)
+
+    out_df.to_csv(save_path, index=False)
     print(f"[SALVATO] {save_path}  ({len(out_df)} squadre, {len(out_df.columns)} colonne)")
 
     # Mini-report forma

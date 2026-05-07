@@ -313,7 +313,7 @@ def main():
             clean_args.append(a)
 
     nations = ([p.stem for p in Path(CONFIG_DIR).glob("*.json")]
-               if clean_args[0] == "--all" else clean_args)
+               if not clean_args or clean_args[0] == "--all" else clean_args)
 
     print(f"\n{'='*65}")
     print(f"  CREDIBILITY RANKING — {datetime.now().strftime('%Y-%m-%d %H:%M')}")

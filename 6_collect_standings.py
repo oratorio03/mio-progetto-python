@@ -33,7 +33,7 @@ def get_active_leagues(nation_code):
                 f_date = datetime.strptime(row["date"], "%Y-%m-%d")
                 if row["played"] == "0" and now <= f_date <= limit_date:
                     active_leagues.add(int(row["league_id"]))
-            except:
+            except (ValueError, KeyError):
                 continue
     return active_leagues
 
