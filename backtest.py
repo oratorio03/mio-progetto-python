@@ -70,7 +70,8 @@ def load_results_nation(nation_code):
     for col in ["home_goals", "away_goals"]:
         df[col] = pd.to_numeric(df.get(col, np.nan), errors="coerce")
     df["total_goals"] = df["home_goals"] + df["away_goals"]
-    df["result_1x2"]  = df.get("result_1x2", pd.Series(dtype=str))
+    if "result_1x2" not in df.columns:
+        df["result_1x2"] = pd.Series(dtype=str)
     df["over25"]      = (df["total_goals"] > 2.5).astype(float)
     df["over15"]      = (df["total_goals"] > 1.5).astype(float)
     df["btts"]        = ((df["home_goals"] > 0) & (df["away_goals"] > 0)).astype(float)
@@ -207,7 +208,8 @@ def run_week(nations, week_start, week_end, results_by_nation, verbose=False):
                     try:
                         q = pred.get("Q1") if m == "HOME WIN" else pred.get("Q_Para") if m == "PARACADUTE" else None
                         return float(q) if q and not pd.isna(q) else None
-                    except: return None
+                    except (ValueError, TypeError):
+                        return None
 
                 # Segnali attivi
                 attivi = {}

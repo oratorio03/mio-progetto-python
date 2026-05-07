@@ -96,7 +96,7 @@ def extract_markets(item):
                     result["q1"] = q1
                     result["qx"] = qx
                     result["q2"] = q2
-            except Exception:
+            except (ValueError, TypeError):
                 pass
 
         elif bid == 5:   # Goals Over/Under
@@ -105,21 +105,21 @@ def extract_markets(item):
                 v15 = values.get("Over 1.5")
                 if v25: result["odd_o25"]  = float(v25)
                 if v15: result["odd_o15"]  = float(v15)
-            except Exception:
+            except (ValueError, TypeError):
                 pass
 
         elif bid == 8:   # BTTS
             try:
                 v = values.get("Yes")
                 if v: result["odd_btts"] = float(v)
-            except Exception:
+            except (ValueError, TypeError):
                 pass
 
         elif bid == 12:  # Double Chance
             try:
                 v = values.get("Home/Draw")
                 if v: result["odd_1x"] = float(v)
-            except Exception:
+            except (ValueError, TypeError):
                 pass
 
     # Validazione minima: serve almeno 1X2

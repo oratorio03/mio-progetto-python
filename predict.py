@@ -194,9 +194,7 @@ HW_LEGA_SOGLIA = {
     "Serie A":              None,  # Italy T1     strutturale (base rate 44%)
     "Serie C GB":           None,  # Italy T3     strutturale
     "Serie D GE":           None,  # Italy T4     strutturale
-    "League Two":           None,  # England T4   H% non discriminante
     "Segunda RFEF G1":      None,  # Spain T4     anomalia severa (31% hit)
-    "National 3 GB":        80,    # già sopra come arancione
 }
 
 # Leghe in zona ARANCIONE — segnale visibile ma non affidabile (dati scarsi/anomalia)
@@ -500,7 +498,7 @@ def predict_match(hp, ap, lg, h2h, odds_row, momentum=None, nation="", lega=""):
     _tot = ph + pd_p + pa
     ph, pd_p, pa = round(ph/_tot*100,1), round(pd_p/_tot*100,1), round(pa/_tot*100,1)
 
-    # Cap lambda — gol attesi max realistico 5.0 (evita valori aberranti)
+    # Cap lambda a 4.0 per Over/BTTS/gate — 1X2 già calcolato con lambda raw
     lh = min(lh, 4.0)
     la = min(la, 4.0)
 
@@ -1129,14 +1127,6 @@ def main():
             clean_args.append(a)
         else:
             clean_args.append(a)
-
-    # Debug path — rimuovere dopo verifica
-    print(f"[DEBUG] __file__    = {Path(__file__).resolve()}")
-    print(f"[DEBUG] _ROOT_DIR   = {_ROOT_DIR}")
-    print(f"[DEBUG] CONFIG_DIR  = {CONFIG_DIR}")
-    print(f"[DEBUG] CONFIG esiste: {Path(CONFIG_DIR).exists()}")
-    jsons = list(Path(CONFIG_DIR).glob("*.json"))
-    print(f"[DEBUG] .json trovati: {len(jsons)}  {[p.name for p in jsons[:5]]}")
 
     nations = ([p.stem for p in Path(CONFIG_DIR).glob("*.json")]
                if clean_args and clean_args[0] == "--all" else
