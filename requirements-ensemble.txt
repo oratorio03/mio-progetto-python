@@ -1,0 +1,16 @@
+# Dipendenze del pacchetto ensemble/ (script 9_ensemble.py).
+# La pipeline 1-8 continua a funzionare con le sue dipendenze attuali.
+
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+scikit-learn>=1.3      # modelli lineari, isotonica, gradient boosting di fallback
+joblib>=1.3            # salvataggio del modello addestrato
+
+# Backend di gradient boosting per M1 — opzionali.
+# Se nessuno è installato, M1 usa HistGradientBoostingClassifier di scikit-learn:
+# funziona, ma su storici grandi CatBoost e LightGBM sono più veloci e un po'
+# più accurati. Il backend viene scelto automaticamente fra quelli disponibili.
+# catboost>=1.2
+# lightgbm>=4.0
+# xgboost>=2.0
